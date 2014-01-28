@@ -1,5 +1,7 @@
 package org.zephyrion.cta;
 
+import thaumcraft.api.aspects.Aspect;
+
 /**
  * 
  * @author Zymus
@@ -27,10 +29,18 @@ public class AspectEntry {
         this.researchPoints = researchPoints;
     }
 
+    /**
+     * Returns the type of Aspect of this AspectEntry.
+     * @return
+     */
     public Aspect getAspect() {
         return aspect;
     }
 
+    /**
+     * Returns the number of research points gained.
+     * @return
+     */
     public int getResearchPoints() {
         return researchPoints;
     }
