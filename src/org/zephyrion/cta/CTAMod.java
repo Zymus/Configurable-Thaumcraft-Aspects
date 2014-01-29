@@ -23,6 +23,7 @@ public final class CTAMod {
     public void preInit(final FMLPreInitializationEvent event) {
         final String minecraftConfigDir =
             event.getModConfigurationDirectory().getAbsolutePath();
+        initConfig(minecraftConfigDir);
         final String ctaConfigFilePath = getConfigFilePath(minecraftConfigDir);
         final File ctaConfigFile = new File(ctaConfigFilePath);
         this.collator = new ConfigurationCollator(
@@ -38,6 +39,18 @@ public final class CTAMod {
         final String ctaConfigFilePath =
             minecraftConfigDir + "/" + MOD_ID + ".xml";
         return ctaConfigFilePath;
+    }
+    
+    private void initConfig(final String minecraftConfigDir) {
+        final File configFile =
+            new File(minecraftConfigDir + "/" + MOD_ID + ".xml");
+        if (!configFile.exists()) {
+            configFile.createNewFile();
+        }
+        final File ctaConfigDir = new File(minecraftConfigDir + "/" + MOD_ID);
+        if (!ctaConfigDir.exists()) {
+            ctaConfigDir.mkdir();
+        }
     }
 
     public static final String MOD_ID = "ConfigurableThaumcraftAspects";
