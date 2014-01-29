@@ -1,14 +1,19 @@
 package org.zephyrion.cta;
 
+import java.util.Collections;
+import java.util.Set;
+
 import thaumcraft.api.aspects.Aspect;
 
 /**
+ * This class represents the object name, the meta values, and the aspects to 
+ * be registered with Thaumcraft.
  * 
  * @author Zymus
  * @version 0.1
  * @since 0.1
  */
-public class AspectEntry {
+public class ModAspectEntry {
 
     /**
      * Constructs a new AspectEntry with the specified Aspect and research
@@ -17,34 +22,59 @@ public class AspectEntry {
      * @param aspect
      * @param researchPoints
      */
-    public AspectEntry(final Aspect aspect, final int researchPoints) {
-        if (aspect == null) {
-            throw new IllegalArgumentException("aspect must not be null");
+    public ModAspectEntry(
+        final String objectID, final Set<Integer> metaValues,
+        final Set<AspectEntry> aspects) {
+        if (objectID == null) {
+            throw new IllegalArgumentException("objectID must not be null");
         }
-        if (researchPoints < 1) {
+        if (metaValues == null) {
             throw new IllegalArgumentException(
-                "researchPoints must be positive integer: " + researchPoints);
+                "metaValues must not be null");
         }
-        this.aspect = aspect;
-        this.researchPoints = researchPoints;
+        if (aspects == null) {
+            throw new IllegalArgumentException("aspects must not be null");
+        }
+        this.objectID = objectID;
+        this.metaValues = metaValues;
+        this.aspects = aspects;
+    }
+
+    /**
+     * Returns the object identifier
+     * @return the object id
+     */
+    public String getObjectID() {
+        return objectID;
+    }
+
+    /**
+     * Returns a Set of all meta values that this entry will be configured for.
+     * 
+     * @return the meta values
+     */
+    public Set<Integer> getMetaValues() {
+        return Collections.unmodifiableSet(metaValues);
     }
 
     /**
      * Returns the type of Aspect of this AspectEntry.
      * @return
      */
-    public Aspect getAspect() {
-        return aspect;
+    public Set<AspectEntry> getAspects() {
+        return Collections.unmodifiableSet(aspects);
     }
 
-    /**
-     * Returns the number of research points gained.
-     * @return
-     */
-    public int getResearchPoints() {
-        return researchPoints;
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("[AspectEntry objectID=\"").append(objectID)
+            .append("\", metaValues=").append(metaValues).append(", aspects=")
+            .append(aspects).append("]");
+        return builder.toString();
     }
 
-    private final Aspect aspect;
-    private final int researchPoints;
+    private final String objectID;
+    private final Set<Integer> metaValues;
+    private final Set<AspectEntry> aspects;
 }
