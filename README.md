@@ -99,6 +99,7 @@ workshop), we would specify the values like so:
 
 What this does is give Brownstone blocks, with meta values 0, 1, 2, 3, and 5 one
 research point in saxum, and one in volatus.
+
 __NOTE__
 : Specifying the metaValues in this way will cause each meta value to count as 
 one block. Meaning if you scan an item with metaValue 0 in this case, scanning 
