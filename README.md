@@ -72,7 +72,7 @@ Example:
     </mod>
     
 What this does is for the "Stone Torch" item (specified in the TConstruct
-config file), we're going to give the player 1000 Terra research points when 
+config file), we're going to give the player 1 Terra research point when 
 they scan a Stone Torch, regardless of the meta value.
 
 If we wanted to add more aspects upon scanning, we would just need to add 
