@@ -3,6 +3,7 @@ package org.zephyrion.cta;
 import java.util.Set;
 
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
 /**
@@ -22,53 +23,53 @@ public final class AspectRegistrar {
     }
 
     /**
-     * Registers the object with the specified aspects. This method allows finer
-     * control over which specific object is being registered by using the
-     * object's meta value.
+     * Registers the object with the Thaumcraft Aspects
      * 
-     * @param id
-     *        the object id
-     * @param metaValue
-     *        the meta value to apply the aspects to
-     * @param entries
-     *        the aspects that are being registered
+     * @param objectIDValue the object id
+     * @param entry the details of the aspects that will be registered
      */
-    public static void registerObject(final int id, final int metaValue,
-        final Set<AspectEntry> entries) {
-        final AspectList aspectList = convertAspectEntrySet(entries);
-        ThaumcraftApi.registerObjectTag(id, metaValue, aspectList);
+    public static void register(
+        final int objectIDValue, final ModAspectEntry entry) {
+        CTALogger.log(String.format("Object %d registered with entry %s",
+            objectIDValue, entry.toString()));
+        final int[] metaValues = convertMetaValues(entry.getMetaValues());
+        final AspectList aspectList = convertAspectSet(entry.getAspects());
+        if (metaValues.length == 1) {
+            final int metaValue = metaValues[0];
+            ThaumcraftApi.registerObjectTag(objectIDValue, metaValue, aspectList);
+        }
+        else {
+            
+            ThaumcraftApi.registerObjectTag(objectIDValue, metaValues, aspectList);
+        }
     }
 
     /**
-     * Registers the object with the specified aspects. This method allows finer
-     * control over which specific object is being registered by using the
-     * object's meta value. This method differs from 
-     * registerObject(id, metaValue, entries), by allowing a group of
-     * metavalues to have the same aspects registered to them.
+     * Converts a Set of integer values into a Thaumcraft-compatible int[]
      * 
-     * @param id
-     *        the object id
-     * @param metaValues
-     *        the meta values to apply the aspects to
-     * @param entries
-     *        the aspects that are being registered
+     * @param metaValuesSet the Set of meta values
+     * @return an int[] containing the meta values
      */
-    public static void registerObject(final int id, final int[] metaValues,
-        final Set<AspectEntry> entries) {
-        final AspectList aspectList = convertAspectEntrySet(entries);
-        ThaumcraftApi.registerObjectTag(id, metaValues, aspectList);
+    private static int[] convertMetaValues(final Set<Integer> metaValuesSet) {
+        final int metaValueCount = metaValuesSet.size();
+        final int[] metaValues = new int[metaValueCount];
+        int index = 0;
+        for (final Integer value : metaValuesSet) {
+            metaValues[index++] = value;
+        }
+        return metaValues;
     }
-
+    
     /**
      * Converts a Set<AspectEntry> into an AspectList to be used by Thaumcraft.
      * 
      * @param entries the entries to be converted
      * @return the Thaumcraft-compatible AspectList
      */
-    private static AspectList convertAspectEntrySet(
-        final Set<AspectEntry> entries) {
+    private static AspectList convertAspectSet(
+        final Set<AspectEntry> aspects) {
         final AspectList list = new AspectList();
-        for (final AspectEntry entry : entries) {
+        for (final AspectEntry entry : aspects) {
             list.add(entry.getAspect(), entry.getResearchPoints());
         }
         return list;
