@@ -4,13 +4,14 @@ import java.util.Set;
 
 import net.minecraftforge.common.ConfigCategory;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.Property;
 
 /**
  * This class adapts a Minecraft Forge Configuration object to more simply 
  * access only the functions necessary for the mod.
  * 
  * @author Zymus
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 public final class ConfigurationAdapter {
@@ -63,13 +64,14 @@ public final class ConfigurationAdapter {
      * @param key the key name
      * @return the value of the key
      */
-    public int getValue(final String key) {
+    public String getValue(final String key) {
         if (key == null) {
             throw new IllegalArgumentException("key must not be null");
         }
         for(final String categoryName : categoryNames) {
             if (config.hasKey(categoryName, key)) {
-                return config.get(categoryName, key, -1).getInt();
+                final Property property = config.get(categoryName, key, "");
+                return property.getString();
             }
         }
         throw new UnsupportedOperationException(

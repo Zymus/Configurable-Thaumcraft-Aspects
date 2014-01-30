@@ -26,7 +26,7 @@ import thaumcraft.api.aspects.Aspect;
  * and aspect config files.
  * 
  * @author Zymus
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 public class ConfigurationCollator {
@@ -181,7 +181,7 @@ public class ConfigurationCollator {
     private final void validateMetaValues(
         final String objectID, final String[] metaValues) {
         for (final String metaValue : metaValues) {
-            if (!metaValue.matches("-?\\d")) {
+            if (!metaValue.matches("-?\\d+")) {
                 throw new NumberFormatException(
                     objectID + " contains invalid metaValue: " + metaValue);
             }
@@ -304,8 +304,17 @@ public class ConfigurationCollator {
         for (final ModAspectEntry entry : entries) {
             final String objectID = entry.getObjectID();
             if (config.containsKey(objectID)) {
-                final int objectIDValue = config.getValue(objectID);
-                final Set<AspectEntry> aspects = entry.getAspects();
+                final String value = config.getValue(objectID);
+                int objectIDValue = -1;
+                if (value.contains(":")) {
+                    final String[] split = value.split(":");
+                    objectIDValue = Integer.parseInt(split[0]);
+                    final int metaValue = Integer.parseInt(split[1]);
+                    entry.addMetaValue(metaValue);
+                }
+                else {
+                    objectIDValue = Integer.parseInt(value);
+                }
                 AspectRegistrar.register(objectIDValue, entry);
             }
             else {

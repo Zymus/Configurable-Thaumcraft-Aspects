@@ -10,7 +10,7 @@ import thaumcraft.api.aspects.Aspect;
  * be registered with Thaumcraft.
  * 
  * @author Zymus
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 public class ModAspectEntry {
@@ -42,6 +42,7 @@ public class ModAspectEntry {
 
     /**
      * Returns the object identifier
+     * 
      * @return the object id
      */
     public String getObjectID() {
@@ -59,10 +60,20 @@ public class ModAspectEntry {
 
     /**
      * Returns the type of Aspect of this AspectEntry.
+     * 
      * @return
      */
     public Set<AspectEntry> getAspects() {
         return Collections.unmodifiableSet(aspects);
+    }
+    
+    /**
+     * Adds a meta value to the entry
+     * 
+     * @param metaValue
+     */
+    void addMetaValue(final int metaValue) {
+        metaValues.add(metaValue);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.zephyrion.cta;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import cpw.mods.fml.common.Mod;
@@ -44,12 +45,17 @@ public final class CTAMod {
     private void initConfig(final String minecraftConfigDir) {
         final File configFile =
             new File(minecraftConfigDir + "/" + MOD_ID + ".xml");
-        if (!configFile.exists()) {
-            configFile.createNewFile();
+        try {
+            if (!configFile.exists()) {
+                configFile.createNewFile();
+            }
+            final File ctaConfigDir = new File(minecraftConfigDir + "/" + MOD_ID);
+            if (!ctaConfigDir.exists()) {
+                ctaConfigDir.mkdir();
+            }
         }
-        final File ctaConfigDir = new File(minecraftConfigDir + "/" + MOD_ID);
-        if (!ctaConfigDir.exists()) {
-            ctaConfigDir.mkdir();
+        catch (final IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 
