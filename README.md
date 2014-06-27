@@ -1,23 +1,18 @@
-Configurable-Thaumcraft-Aspects [1.6.4] v0.2
+Configurable-Thaumcraft-Aspects [1.6.4] v0.4
 ============================================
-
-This mod allows users to configure Thaumcraft aspects for Items and Blocks that 
-do not have any.
+This mod allows users to configure Thaumcraft aspects for Items and Blocks.
 
 Requirements
 ============================================
-
 Java 1.7+
 
 Installation
 ============================================
-
-Copy '''ConfigurableThaumcraftAspects-1.6.4-0.2.zip''' into your mods folder 
+Copy '''ConfigurableThaumcraftAspects-1.6.4-0.4.zip''' into your mods folder 
 (.minecraft/mods/)
 
 Configuration
 ============================================
-
 1. Upon launching the client, this mod will create the necessary file and 
 directory to use the mod.
 
